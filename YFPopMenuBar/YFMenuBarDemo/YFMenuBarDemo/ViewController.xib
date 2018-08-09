@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ViewController">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="41A-if-Xio">
+                    <rect key="frame" x="313" y="36" width="46" height="30"/>
+                    <state key="normal" title="Button"/>
+                    <connections>
+                        <action selector="action:" destination="-1" eventType="touchUpInside" id="BfH-pL-ddT"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qUB-B6-1Ul">
+                    <rect key="frame" x="16" y="36" width="46" height="30"/>
+                    <state key="normal" title="Button"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A9C-Zi-KOV">
+                    <rect key="frame" x="16" y="621" width="46" height="30"/>
+                    <state key="normal" title="Button"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wg3-PR-Y2W">
+                    <rect key="frame" x="313" y="621" width="46" height="30"/>
+                    <state key="normal" title="Button"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.95686274510000002" green="0.61176470589999998" blue="0.27058823529999998" alpha="1" colorSpace="deviceRGB"/>
+            <constraints>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="wg3-PR-Y2W" secondAttribute="bottom" constant="16" id="K7k-Is-rRu"/>
+                <constraint firstItem="qUB-B6-1Ul" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="16" id="LxQ-4i-R3G"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="41A-if-Xio" secondAttribute="trailing" constant="16" id="fIw-4x-Ssh"/>
+                <constraint firstItem="qUB-B6-1Ul" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="16" id="g3g-VP-MBZ"/>
+                <constraint firstItem="41A-if-Xio" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="16" id="hgt-9U-KCG"/>
+                <constraint firstItem="A9C-Zi-KOV" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="16" id="rUB-1Z-hpf"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="wg3-PR-Y2W" secondAttribute="trailing" constant="16" id="tVo-WD-V7U"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="A9C-Zi-KOV" secondAttribute="bottom" constant="16" id="zGf-A3-Qgi"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+        </view>
+    </objects>
+</document>
