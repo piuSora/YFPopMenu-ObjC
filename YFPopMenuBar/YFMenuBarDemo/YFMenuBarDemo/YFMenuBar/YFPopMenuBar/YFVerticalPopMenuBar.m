@@ -15,10 +15,6 @@ static NSString *cellID = @"PopMenuBarCell";
 
 @interface YFVerticalPopMenuBar ()<UITableViewDelegate,UITableViewDataSource>
 
-/**
- 箭头定点的偏移量（距离右侧）
- */
-@property (assign, nonatomic) CGFloat arrowOffsetX;
 @property (strong, nonatomic) UITableView *selectTableView;
 @property (strong, nonatomic) NSMutableArray <CellModel *> *cellData;
 @property (strong, nonatomic) CAShapeLayer *bLayer; //border layer
@@ -95,7 +91,10 @@ static NSString *cellID = @"PopMenuBarCell";
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self.delegate popMenuBar:self didSelectItemAtIndex:indexPath.row];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if ([self.delegate respondsToSelector:@selector(popMenuBar:didSelectItemAtIndex:)]) {
+        [self.delegate popMenuBar:self didSelectItemAtIndex:indexPath.row];
+    }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     CGFloat contentHeight = self.cellData[indexPath.row].imgSize.height > 17 ? self.iconSize.height : 17;
@@ -117,7 +116,6 @@ static NSString *cellID = @"PopMenuBarCell";
         self.alpha = 0;
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
-        
     }];
 }
 
@@ -125,14 +123,19 @@ static NSString *cellID = @"PopMenuBarCell";
 
 //获取view的frame
 - (CGRect)gettingViewFrame{
+    if (self.menuFrame.size.height != 0) {//关闭自适应
+        return self.frame;
+    }
     CGFloat height = 0;
     CGFloat width = 0;
     CGFloat contentHeight = 0;
+    //高度
     for (int i = 0; i < self.cellData.count; i++) {
         contentHeight = self.cellData[i].imgSize.height > 17 ? self.cellData[i].imgSize.height : 17;
         height += contentHeight + 20;
     }
     height += self.arrowSize.height;
+    //宽度
     if (self.imgList.count && self.titleList.count) {//图片文字都有
         width = [self gettingMaxWidthWithTitleList] + 34 + self.iconSize.width;
     }
@@ -220,6 +223,17 @@ static NSString *cellID = @"PopMenuBarCell";
     [self reloadView];
 }
 
+- (void)setArrowOffsetX:(CGFloat)arrowOffsetX{
+    _arrowOffsetX = arrowOffsetX;
+    [self reloadView];
+}
+
+- (void)setMenuFrame:(CGRect)menuFrame{
+    _menuFrame = menuFrame;
+    self.frame = menuFrame;
+    self.selectTableView.scrollEnabled = YES;
+}
+
 #pragma mark - cell data
 
 - (NSMutableArray<CellModel *> *)cellData{
@@ -262,7 +276,6 @@ static NSString *cellID = @"PopMenuBarCell";
 - (UITableView *)selectTableView{
     if (!_selectTableView) {
         _selectTableView = [[UITableView alloc] init];
-//        _selectTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.arrowSize.height, self.frame.size.width, self.frame.size.height - self.arrowSize.height) style:UITableViewStylePlain];
         _selectTableView.scrollEnabled = NO;
         _selectTableView.backgroundColor = [UIColor clearColor];
         _selectTableView.separatorStyle = UITableViewCellSeparatorStyleNone;

@@ -13,12 +13,17 @@
 @interface YFVerticalPopMenuBar : UIView
 
 /**
- 箭头三角形底和高
+ 箭头三角形底和高 默认10*5
  */
 @property (assign, nonatomic) CGSize arrowSize;
 
 /**
- 圆角
+ 箭头定点的偏移量（距离右侧）默认20
+ */
+@property (assign, nonatomic) CGFloat arrowOffsetX;
+
+/**
+ 圆角  默认4
  */
 @property (assign, nonatomic) CGFloat radius;
 
@@ -28,12 +33,12 @@
 @property (strong, nonatomic) UIColor *borderColor;
 
 /**
- border宽度
+ border宽度 默认1
  */
 @property (assign, nonatomic) CGFloat borderWidth;
 
 /**
- 图标大小
+ 图标大小 默认20*20
  */
 @property (assign, nonatomic) CGSize iconSize;
 
@@ -52,11 +57,27 @@
  */
 @property (strong, nonatomic) UIColor *titleColor;
 
+/**
+ menu的Frame 如果设置此属性 将关闭宽高自适应
+ */
+@property (assign, nonatomic) CGRect menuFrame;
+
+
+/**
+ 代理
+ */
 @property (strong, nonatomic) id <PopMenuDelegate>delegate;
 
+/**
+ 实例化方法
+ */
 - (instancetype)initWithTitleList:(NSArray *)titleList imageList:(NSArray *)imageList showPosition:(CGPoint)origin;
 
+/**
+ 展示隐藏方法
+ */
 - (void)showMenuBarToView:(UIView *)view;
+
 - (void)hideMenuBar;
 
 @end

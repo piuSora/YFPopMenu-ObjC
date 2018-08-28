@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ViewController">
             <connections>
+                <outlet property="titleLabel" destination="jg3-2Y-SVL" id="ZIW-yE-biM"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -39,6 +40,12 @@
                     <rect key="frame" x="313" y="621" width="46" height="30"/>
                     <state key="normal" title="Button"/>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jg3-2Y-SVL">
+                    <rect key="frame" x="166" y="40" width="42" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="0.95686274510000002" green="0.61176470589999998" blue="0.27058823529999998" alpha="1" colorSpace="deviceRGB"/>
             <constraints>
@@ -48,7 +55,9 @@
                 <constraint firstItem="qUB-B6-1Ul" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="16" id="g3g-VP-MBZ"/>
                 <constraint firstItem="41A-if-Xio" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="16" id="hgt-9U-KCG"/>
                 <constraint firstItem="A9C-Zi-KOV" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="16" id="rUB-1Z-hpf"/>
+                <constraint firstItem="jg3-2Y-SVL" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="20" id="rUn-Su-HGy"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="wg3-PR-Y2W" secondAttribute="trailing" constant="16" id="tVo-WD-V7U"/>
+                <constraint firstItem="jg3-2Y-SVL" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="wxX-yx-Vus"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="A9C-Zi-KOV" secondAttribute="bottom" constant="16" id="zGf-A3-Qgi"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
