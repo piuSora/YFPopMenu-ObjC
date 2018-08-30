@@ -19,17 +19,26 @@ static NSString *cellID = @"PopMenuBarCell";
 @property (strong, nonatomic) NSMutableArray <CellModel *> *cellData;
 @property (strong, nonatomic) CAShapeLayer *bLayer; //border layer
 @property (assign, nonatomic) CGPoint position;
+@property (strong, nonatomic) NSMutableArray *cellHeight;//用于缓存每个cell行高
 @end
 
 @implementation YFVerticalPopMenuBar
 
 
-- (id)initWithTitleList:(NSArray *)titleList imageList:(NSArray *)imageList showPosition:(CGPoint)origin{
+- (id)initWithTitleList:(NSArray *)titleList imageList:(NSArray *)imageList showPosition:(CGPoint)origin delegate:(id<PopMenuDelegate>)delegate{
+    _titleList = titleList;;
+    _imgList = imageList;;
+    _position = origin;;
+    _delegate = delegate;
+    
+    self = [self init];
+    return self;
+}
+
+- (id)init{
     if (self = [super init]) {
-        _titleList = titleList;
-        _imgList = imageList;
-        _position = origin;
         _titleColor = RGBColor(51, 51, 51);
+        _titleFont = [UIFont systemFontOfSize:14];
         _arrowSize = CGSizeMake(10, 5);
         _arrowOffsetX = 20;
         _iconSize = CGSizeMake(20, 20);
@@ -43,7 +52,6 @@ static NSString *cellID = @"PopMenuBarCell";
         [self.selectTableView registerNib:[UINib nibWithNibName:@"PopMenuBarCell" bundle:nil] forCellReuseIdentifier:cellID];
         self.selectTableView.delegate = self;
         self.selectTableView.dataSource = self;
-        
     }
     return self;
 }
@@ -97,8 +105,11 @@ static NSString *cellID = @"PopMenuBarCell";
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    CGFloat contentHeight = self.cellData[indexPath.row].imgSize.height > 17 ? self.iconSize.height : 17;
-    return contentHeight + 20;
+//    CellModel *tmpModel = self.cellData[indexPath.row];
+//    CGFloat titleHeight = [self gettingStringSizeWithString:tmpModel.title attributes:tmpModel.attributes].height;
+//    CGFloat contentHeight = tmpModel.imgSize.height > titleHeight ? tmpModel.imgSize.height : titleHeight;
+//    return contentHeight + 20;
+    return [self.cellHeight[indexPath.row] floatValue];
 }
 
 #pragma mark - Action
@@ -123,49 +134,56 @@ static NSString *cellID = @"PopMenuBarCell";
 
 //获取view的frame
 - (CGRect)gettingViewFrame{
-    if (self.menuFrame.size.height != 0) {//关闭自适应
-        return self.frame;
-    }
     CGFloat height = 0;
     CGFloat width = 0;
-    CGFloat contentHeight = 0;
-    //高度
-    for (int i = 0; i < self.cellData.count; i++) {
-        contentHeight = self.cellData[i].imgSize.height > 17 ? self.cellData[i].imgSize.height : 17;
-        height += contentHeight + 20;
+    self.cellHeight = [NSMutableArray array];
+    //宽度及高度计算
+    for (CellModel *tmpModel in self.cellData) {
+        CGFloat tmpWidth;//单行宽度
+        CGFloat tmpHeight;//单行高度
+        if (tmpModel.imgName && ![tmpModel.imgName isEqualToString:@""] && tmpModel.title && ![tmpModel.title isEqualToString:@""]) {
+            //图片文字都有
+            CGSize titleSize = [self gettingStringSizeWithString:tmpModel.title attributes:tmpModel.attributes paddingWidth:34 + self.iconSize.width];
+            tmpWidth = titleSize.width + 34 + self.iconSize.width;
+            tmpHeight = (tmpModel.imgSize.height > (titleSize.height) ? tmpModel.imgSize.height : (titleSize.height)) + 20;
+        }
+        else if (tmpModel.imgName){
+            //只有图片
+            tmpWidth = self.iconSize.width + 21;
+            tmpHeight = self.iconSize.height + 20;
+        }
+        else if (tmpModel.title){
+            //只有文字
+            CGSize titleSize = [self gettingStringSizeWithString:tmpModel.title attributes:tmpModel.attributes paddingWidth:26];
+            tmpWidth = titleSize.width + 26;
+            tmpHeight = (titleSize.height) + 20 ;
+        }
+        else{
+            tmpWidth = 0;
+            tmpHeight = 0;
+        }
+        height += tmpHeight;
+        width = tmpWidth > width ? tmpWidth : width;
+        [self.cellHeight addObject:[NSNumber numberWithFloat:tmpHeight]];
     }
     height += self.arrowSize.height;
-    //宽度
-    if (self.imgList.count && self.titleList.count) {//图片文字都有
-        width = [self gettingMaxWidthWithTitleList] + 34 + self.iconSize.width;
-    }
-    else if (self.imgList.count){//只有图片
-        width = self.iconSize.width + 21;
-    }
-    else if (self.titleList.count){//只有文字
-        width = [self gettingMaxWidthWithTitleList] + 26;
-    }
-    else{
-        width = 0;
+    if (self.menuFrame.size.height != 0) {//关闭自适应
+        return self.frame;
     }
     return CGRectMake(self.position.x, self.position.y, width, height);
 }
 
-//获取最长文字宽度
-- (CGFloat)gettingMaxWidthWithTitleList{
-    CGFloat maxWidth = 0;
-    for (NSString *str in self.titleList) {
-        CGFloat tmpWidth = [self gettingStringWidthWithString:str];
-        if (tmpWidth > maxWidth) {
-            maxWidth = tmpWidth;
-        }
+//获取字符串大小
+- (CGSize)gettingStringSizeWithString:(NSString *)str attributes:(NSDictionary<NSAttributedStringKey, id>*)attributes paddingWidth:(CGFloat)padding{
+    CGSize size;
+    if (self.menuFrame.size.width) {//手动设置宽高计算
+        size = [str boundingRectWithSize:CGSizeMake(self.menuFrame.size.width - padding, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attributes context:nil].size;
     }
-    return maxWidth;
-}
-
-//获取字符串宽度
-- (CGFloat)gettingStringWidthWithString:(NSString *)str{
-    return [str boundingRectWithSize:CGSizeMake(MAXFLOAT, 17) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size.width + 1;
+    else{//单行大小计算
+        size = [str boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attributes context:nil].size;
+        size = CGSizeMake(size.width + 0.5, size.height + 0.5);//autolayout布局会四舍五入 多留0.5空白
+    }
+    return size;
 }
 
 //刷新
@@ -208,6 +226,11 @@ static NSString *cellID = @"PopMenuBarCell";
     [self reloadMenuData];
 }
 
+- (void)setTitleFont:(UIFont *)titleFont{
+    _titleFont = titleFont;
+    [self reloadMenuData];
+}
+
 - (void)setRadius:(CGFloat)radius{
     _radius = radius;
     [self reloadView];
@@ -232,6 +255,7 @@ static NSString *cellID = @"PopMenuBarCell";
     _menuFrame = menuFrame;
     self.frame = menuFrame;
     self.selectTableView.scrollEnabled = YES;
+    [self reloadView];
 }
 
 #pragma mark - cell data
@@ -249,20 +273,30 @@ static NSString *cellID = @"PopMenuBarCell";
         else{
             count = self.titleList.count;
         }
+        
+        
         for (int i = 0 ; i < count; i++) {
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-            if (i < _titleList.count) {
+            if (i < _titleList.count) {//设置标题数据源
                 if (_titleList[i]) {
+                    NSDictionary *attributes;
+                    if ([self.delegate respondsToSelector:@selector(popMenuBar:attributesForIndex:)]) {//如果代理设置了富文本
+                        attributes = [self.delegate popMenuBar:self attributesForIndex:i];
+                    }
+                    else{
+                        attributes = @{NSForegroundColorAttributeName:_titleColor,NSFontAttributeName:_titleFont};
+                    }
+                    [dic setObject:attributes forKey:@"attributes"];
                     [dic setObject:_titleList[i] forKey:@"title"];
-                    [dic setObject:self.titleColor forKey:@"titleColor"];
                 }
             }
-            if (i < _imgList.count) {
+            if (i < _imgList.count) {//设置图片数据源
                 if (_imgList[i]){
                     [dic setObject:_imgList[i] forKey:@"imgName"];
                     [dic setObject:[NSValue valueWithCGSize:self.iconSize] forKey:@"imgSize"];
                 }
             }
+            //转模型
             CellModel *model = [CellModel new];
             [model setValuesForKeysWithDictionary:dic];
             [_cellData addObject:model];
@@ -278,6 +312,9 @@ static NSString *cellID = @"PopMenuBarCell";
         _selectTableView = [[UITableView alloc] init];
         _selectTableView.scrollEnabled = NO;
         _selectTableView.backgroundColor = [UIColor clearColor];
+        _selectTableView.showsVerticalScrollIndicator = NO;
+        _selectTableView.showsHorizontalScrollIndicator = NO;
+        _selectTableView.tableFooterView = [UIView new];
         _selectTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self addSubview:_selectTableView];
     }

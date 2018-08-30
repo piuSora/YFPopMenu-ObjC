@@ -58,6 +58,11 @@
 @property (strong, nonatomic) UIColor *titleColor;
 
 /**
+ title字体
+ */
+@property (strong, nonatomic) UIFont *titleFont;
+
+/**
  menu的Frame 如果设置此属性 将关闭宽高自适应
  */
 @property (assign, nonatomic) CGRect menuFrame;
@@ -71,7 +76,7 @@
 /**
  实例化方法
  */
-- (instancetype)initWithTitleList:(NSArray *)titleList imageList:(NSArray *)imageList showPosition:(CGPoint)origin;
+- (instancetype)initWithTitleList:(NSArray <NSString *>*)titleList imageList:(NSArray <NSString *>*)imageList showPosition:(CGPoint)origin delegate:(id <PopMenuDelegate>)delegate;
 
 /**
  展示隐藏方法
@@ -87,5 +92,7 @@
 @optional
 
 - (void)popMenuBar:(YFVerticalPopMenuBar *)popMenuBar didSelectItemAtIndex:(NSUInteger)index;
+
+- (NSDictionary<NSAttributedStringKey, id>*)popMenuBar:(YFVerticalPopMenuBar *)popMenuBar attributesForIndex:(NSUInteger)index;
 
 @end

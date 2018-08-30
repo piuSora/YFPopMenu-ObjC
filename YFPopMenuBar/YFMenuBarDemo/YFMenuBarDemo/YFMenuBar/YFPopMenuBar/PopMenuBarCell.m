@@ -25,6 +25,7 @@
 }
 
 - (void)setModel:(CellModel *)model{
+    _model = model;
     if ([model.imgName isEqualToString:@""] || !model.imgName) {
         self.iconWidth.constant = 0;
         self.titleLeadings.constant = 0;
@@ -34,8 +35,8 @@
         self.iconHeight.constant = model.imgSize.height;
         self.titleLeadings.constant = 8;
     }
-    self.titleLabel.text = model.title;
-    self.titleLabel.textColor = model.titleColor;
+    NSAttributedString *attriString = [[NSAttributedString alloc] initWithString:model.title attributes:model.attributes];
+    self.titleLabel.attributedText = attriString;
     self.icon.image = [UIImage imageNamed:model.imgName];
 }
 

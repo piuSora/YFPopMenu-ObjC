@@ -14,6 +14,7 @@
 @property (strong, nonatomic) NSString *title;
 @property (assign, nonatomic) CGSize imgSize;
 @property (strong, nonatomic) NSString *imgName;
-@property (strong, nonatomic) UIColor *titleColor;
+//@property (strong, nonatomic) UIColor *titleColor;
+@property (strong, nonatomic) NSDictionary<NSAttributedStringKey, id>*attributes;
 
 @end
