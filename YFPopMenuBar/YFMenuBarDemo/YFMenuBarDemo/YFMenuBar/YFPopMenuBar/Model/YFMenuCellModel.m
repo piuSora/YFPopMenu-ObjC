@@ -6,8 +6,8 @@
 //  Copyright © 2018年 Nonsense. All rights reserved.
 //
 
-#import "CellModel.h"
+#import "YFMenuCellModel.h"
 
-@implementation CellModel
+@implementation YFMenuCellModel
 
 @end
