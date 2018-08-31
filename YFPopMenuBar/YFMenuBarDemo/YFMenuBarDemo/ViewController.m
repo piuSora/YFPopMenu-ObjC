@@ -31,9 +31,10 @@
 
 - (IBAction)action:(UIButton *)sender {
     YFVerticalPopMenuBar *verticalMenu = [[YFVerticalPopMenuBar alloc] initWithTitleList:@[@"123",@"345",@"98765431231212312312312312312312312"] imageList:@[@"ranking_China",@"ranking_China",@"ranking_China"] showPosition:CGPointMake(sender.frame.origin.x - 100, sender.center.y + sender.frame.size.height) delegate:self];
-    verticalMenu.menuFrame = CGRectMake(100, 100, 140, 200);
+//    verticalMenu.menuFrame = CGRectMake(100, 100, 140, 200);
     verticalMenu.imgList = @[@"ranking_China",@"ranking_China",@"ranking_China"];
     verticalMenu.titleList = @[@"1",@"12",@"123",@"1234",@"12345",@"123456"];
+    verticalMenu.backgroundColor = [UIColor grayColor];
     [verticalMenu showMenuBarToView:self.view];
 }
 
@@ -46,6 +47,10 @@
 
 - (NSDictionary<NSAttributedStringKey,id> *)popMenuBar:(YFVerticalPopMenuBar *)popMenuBar attributesForIndex:(NSUInteger)index{
     return self.attributesArray[index];
+}
+
+- (NSString *)popMenuBar:(YFVerticalPopMenuBar *)popMenuBar backgroundImageForIndex:(NSUInteger)index{
+    return @"background.jpg";
 }
 
 #pragma mark - setter & getter

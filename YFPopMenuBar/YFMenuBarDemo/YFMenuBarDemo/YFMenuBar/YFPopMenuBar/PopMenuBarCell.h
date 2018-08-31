@@ -6,10 +6,10 @@
 //  Copyright © 2018年 Nonsense. All rights reserved.
 //
 
-#import "CellModel.h"
+#import "YFMenuCellModel.h"
 
 @interface PopMenuBarCell : UITableViewCell
 
-@property (strong, nonatomic) CellModel *model;
+@property (strong, nonatomic) YFMenuCellModel *model;
 
 @end

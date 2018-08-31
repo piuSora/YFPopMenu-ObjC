@@ -9,14 +9,14 @@
 
 #import "YFVerticalPopMenuBar.h"
 #import "PopMenuBarCell.h"
-#import "CellModel.h"
+#import "YFMenuCellModel.h"
 
 static NSString *cellID = @"PopMenuBarCell";
 
 @interface YFVerticalPopMenuBar ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (strong, nonatomic) UITableView *selectTableView;
-@property (strong, nonatomic) NSMutableArray <CellModel *> *cellData;
+@property (strong, nonatomic) NSMutableArray <YFMenuCellModel *> *cellData;
 @property (strong, nonatomic) CAShapeLayer *bLayer; //border layer
 @property (assign, nonatomic) CGPoint position;
 @property (strong, nonatomic) NSMutableArray *cellHeight;//用于缓存每个cell行高
@@ -138,7 +138,7 @@ static NSString *cellID = @"PopMenuBarCell";
     CGFloat width = 0;
     self.cellHeight = [NSMutableArray array];
     //宽度及高度计算
-    for (CellModel *tmpModel in self.cellData) {
+    for (YFMenuCellModel *tmpModel in self.cellData) {
         CGFloat tmpWidth;//单行宽度
         CGFloat tmpHeight;//单行高度
         if (tmpModel.imgName && ![tmpModel.imgName isEqualToString:@""] && tmpModel.title && ![tmpModel.title isEqualToString:@""]) {
@@ -260,7 +260,7 @@ static NSString *cellID = @"PopMenuBarCell";
 
 #pragma mark - cell data
 
-- (NSMutableArray<CellModel *> *)cellData{
+- (NSMutableArray<YFMenuCellModel *> *)cellData{
     if (!_cellData) {
         _cellData = [NSMutableArray array];
         NSInteger count = 0;
@@ -296,8 +296,11 @@ static NSString *cellID = @"PopMenuBarCell";
                     [dic setObject:[NSValue valueWithCGSize:self.iconSize] forKey:@"imgSize"];
                 }
             }
+            if ([self.delegate respondsToSelector:@selector(popMenuBar:backgroundImageForIndex:)]) {//设置背景图片数据源
+                [dic setObject:[self.delegate popMenuBar:self backgroundImageForIndex:i] forKey:@"backgroundImage"];
+            }
             //转模型
-            CellModel *model = [CellModel new];
+            YFMenuCellModel *model = [YFMenuCellModel new];
             [model setValuesForKeysWithDictionary:dic];
             [_cellData addObject:model];
         }

@@ -95,4 +95,6 @@
 
 - (NSDictionary<NSAttributedStringKey, id>*)popMenuBar:(YFVerticalPopMenuBar *)popMenuBar attributesForIndex:(NSUInteger)index;
 
+- (NSString *)popMenuBar:(YFVerticalPopMenuBar *)popMenuBar backgroundImageForIndex:(NSUInteger)index;
+
 @end

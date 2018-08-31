@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconWidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLeadings;
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 
 @end
 
@@ -24,7 +25,7 @@
     // Initialization code
 }
 
-- (void)setModel:(CellModel *)model{
+- (void)setModel:(YFMenuCellModel *)model{
     _model = model;
     if ([model.imgName isEqualToString:@""] || !model.imgName) {
         self.iconWidth.constant = 0;
@@ -35,6 +36,7 @@
         self.iconHeight.constant = model.imgSize.height;
         self.titleLeadings.constant = 8;
     }
+    self.backgroundImageView.image = [UIImage imageNamed:model.backgroundImage];
     NSAttributedString *attriString = [[NSAttributedString alloc] initWithString:model.title attributes:model.attributes];
     self.titleLabel.attributedText = attriString;
     self.icon.image = [UIImage imageNamed:model.imgName];

@@ -13,12 +13,13 @@
 		4C37BCA3211ACBB000E4C49A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C37BCA1211ACBB000E4C49A /* ViewController.m */; };
 		4C37BCA4211ACBB000E4C49A /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C37BCA2211ACBB000E4C49A /* ViewController.xib */; };
 		4C37BCB8211ACD3C00E4C49A /* PopMenuBarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C37BCAF211ACD3C00E4C49A /* PopMenuBarCell.m */; };
-		4C37BCBA211ACD3C00E4C49A /* CellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C37BCB4211ACD3C00E4C49A /* CellModel.m */; };
+		4C37BCBA211ACD3C00E4C49A /* YFMenuCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C37BCB4211ACD3C00E4C49A /* YFMenuCellModel.m */; };
 		4C37BCBB211ACD3C00E4C49A /* PopMenuBarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C37BCB6211ACD3C00E4C49A /* PopMenuBarCell.xib */; };
 		4C37BCBC211ACD3C00E4C49A /* YFVerticalPopMenuBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C37BCB7211ACD3C00E4C49A /* YFVerticalPopMenuBar.m */; };
 		4C37BCCA211C0BBD00E4C49A /* ranking_China.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C37BCC7211C0BBC00E4C49A /* ranking_China.png */; };
 		4C37BCCB211C0BBD00E4C49A /* ranking_China@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C37BCC8211C0BBC00E4C49A /* ranking_China@2x.png */; };
 		4C37BCCC211C0BBD00E4C49A /* ranking_China@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C37BCC9211C0BBD00E4C49A /* ranking_China@3x.png */; };
+		4C94030F2138F292005A8E44 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4C94030E2138F291005A8E44 /* background.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,13 +35,14 @@
 		4C37BCAF211ACD3C00E4C49A /* PopMenuBarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopMenuBarCell.m; sourceTree = "<group>"; };
 		4C37BCB0211ACD3C00E4C49A /* YFVerticalPopMenuBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFVerticalPopMenuBar.h; sourceTree = "<group>"; };
 		4C37BCB2211ACD3C00E4C49A /* PopMenuBarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopMenuBarCell.h; sourceTree = "<group>"; };
-		4C37BCB4211ACD3C00E4C49A /* CellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellModel.m; sourceTree = "<group>"; };
-		4C37BCB5211ACD3C00E4C49A /* CellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellModel.h; sourceTree = "<group>"; };
+		4C37BCB4211ACD3C00E4C49A /* YFMenuCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFMenuCellModel.m; sourceTree = "<group>"; };
+		4C37BCB5211ACD3C00E4C49A /* YFMenuCellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFMenuCellModel.h; sourceTree = "<group>"; };
 		4C37BCB6211ACD3C00E4C49A /* PopMenuBarCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopMenuBarCell.xib; sourceTree = "<group>"; };
 		4C37BCB7211ACD3C00E4C49A /* YFVerticalPopMenuBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFVerticalPopMenuBar.m; sourceTree = "<group>"; };
 		4C37BCC7211C0BBC00E4C49A /* ranking_China.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ranking_China.png; sourceTree = "<group>"; };
 		4C37BCC8211C0BBC00E4C49A /* ranking_China@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ranking_China@2x.png"; sourceTree = "<group>"; };
 		4C37BCC9211C0BBD00E4C49A /* ranking_China@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ranking_China@3x.png"; sourceTree = "<group>"; };
+		4C94030E2138F291005A8E44 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,8 +106,8 @@
 		4C37BCB3211ACD3C00E4C49A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4C37BCB5211ACD3C00E4C49A /* CellModel.h */,
-				4C37BCB4211ACD3C00E4C49A /* CellModel.m */,
+				4C37BCB5211ACD3C00E4C49A /* YFMenuCellModel.h */,
+				4C37BCB4211ACD3C00E4C49A /* YFMenuCellModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -121,6 +123,7 @@
 		4C37BCC6211C0BA800E4C49A /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				4C94030E2138F291005A8E44 /* background.jpg */,
 				4C37BCC7211C0BBC00E4C49A /* ranking_China.png */,
 				4C37BCC8211C0BBC00E4C49A /* ranking_China@2x.png */,
 				4C37BCC9211C0BBD00E4C49A /* ranking_China@3x.png */,
@@ -187,6 +190,7 @@
 			files = (
 				4C37BCCA211C0BBD00E4C49A /* ranking_China.png in Resources */,
 				4C37BCBB211ACD3C00E4C49A /* PopMenuBarCell.xib in Resources */,
+				4C94030F2138F292005A8E44 /* background.jpg in Resources */,
 				4C37BCA4211ACBB000E4C49A /* ViewController.xib in Resources */,
 				4C37BC8D211AC93F00E4C49A /* Assets.xcassets in Resources */,
 				4C37BCCC211C0BBD00E4C49A /* ranking_China@3x.png in Resources */,
@@ -206,7 +210,7 @@
 				4C37BCBC211ACD3C00E4C49A /* YFVerticalPopMenuBar.m in Sources */,
 				4C37BC93211AC93F00E4C49A /* main.m in Sources */,
 				4C37BC85211AC93E00E4C49A /* AppDelegate.m in Sources */,
-				4C37BCBA211ACD3C00E4C49A /* CellModel.m in Sources */,
+				4C37BCBA211ACD3C00E4C49A /* YFMenuCellModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
