@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSUInteger, YFPopOverDirection) {
+    YFPopOverDirectionAuto = 0,
+    YFPopOverdirectionUp,
+    YFPopOverDirectionDown,
+};
+
 @protocol PopMenuDelegate;
 
 @interface YFVerticalPopMenuBar : UIView
@@ -18,7 +24,7 @@
 @property (assign, nonatomic) CGSize arrowSize;
 
 /**
- 箭头定点的偏移量（距离右侧）默认20
+ 箭头顶点的偏移量（距离右侧）默认20
  */
 @property (assign, nonatomic) CGFloat arrowOffsetX;
 
@@ -66,6 +72,11 @@
  menu的Frame 如果设置此属性 将关闭宽高自适应
  */
 @property (assign, nonatomic) CGRect menuFrame;
+
+/**
+ PopOver方向
+ */
+@property (nonatomic, assign) YFPopOverDirection direction;
 
 
 /**

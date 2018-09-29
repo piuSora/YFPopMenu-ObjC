@@ -57,21 +57,14 @@ static NSString *cellID = @"PopMenuBarCell";
 }
 
 //设置箭头
-- (void)settingTopArrow{
-    //上箭头
-    //
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    [[UIColor redColor] set];
-    //point 1-7从箭头顶点开始逆时针标记
-    [path moveToPoint:CGPointMake(self.frame.size.width - self.arrowOffsetX, 0)];
-    [path addLineToPoint:CGPointMake(self.frame.size.width - self.arrowOffsetX - self.arrowSize.width / 2.0, self.arrowSize.height)];
-    [path addArcWithCenter:CGPointMake(0 + _radius, self.arrowSize.height + _radius) radius:_radius startAngle:M_PI * 3 / 2.0 endAngle:M_PI clockwise:0];
-    [path addArcWithCenter:CGPointMake(_radius, self.frame.size.height - _radius) radius:_radius startAngle:M_PI endAngle:M_PI / 2.0 clockwise:0];
-    [path addArcWithCenter:CGPointMake(self.frame.size.width - _radius, self.frame.size.height - _radius) radius:_radius startAngle:M_PI / 2.0 endAngle:M_PI * 2 clockwise:0];
-    [path addArcWithCenter:CGPointMake(self.frame.size.width - _radius, self.arrowSize.height + _radius) radius:_radius startAngle:2 * M_PI endAngle:M_PI * 3 / 2.0 clockwise:0];
-    [path addLineToPoint:CGPointMake(self.frame.size.width - self.arrowOffsetX + self.arrowSize.width / 2.0, self.arrowSize.height)];
-    [path closePath];
-    
+- (void)settingArrow{
+    UIBezierPath *path;
+    if (self.direction == YFPopOverDirectionDown) {
+        path = [self gettingDownArrowPath];
+    }
+    else{
+        path = [self gettingUpArrowPath];
+    }
     //作为mask的layer 不能有子类或者父类layer 所以需要重新实例化一个layer作为边界border的颜色
     if (_bLayer) {
         [_bLayer removeFromSuperlayer];
@@ -85,6 +78,38 @@ static NSString *cellID = @"PopMenuBarCell";
     layer.path = path.CGPath;
     [self.layer addSublayer:_bLayer];
     self.layer.mask = layer;
+}
+
+//上箭头BezierPath
+- (UIBezierPath *)gettingUpArrowPath{
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [[UIColor redColor] set];
+    //point 1-7从箭头顶点开始逆时针标记
+    [path moveToPoint:CGPointMake(self.frame.size.width - self.arrowOffsetX, 0)];
+    [path addLineToPoint:CGPointMake(self.frame.size.width - self.arrowOffsetX - self.arrowSize.width / 2.0, self.arrowSize.height)];
+    [path addArcWithCenter:CGPointMake(0 + _radius, self.arrowSize.height + _radius) radius:_radius startAngle:M_PI * 3 / 2.0 endAngle:M_PI clockwise:0];
+    [path addArcWithCenter:CGPointMake(_radius, self.frame.size.height - _radius) radius:_radius startAngle:M_PI endAngle:M_PI / 2.0 clockwise:0];
+    [path addArcWithCenter:CGPointMake(self.frame.size.width - _radius, self.frame.size.height - _radius) radius:_radius startAngle:M_PI / 2.0 endAngle:M_PI * 2 clockwise:0];
+    [path addArcWithCenter:CGPointMake(self.frame.size.width - _radius, self.arrowSize.height + _radius) radius:_radius startAngle:2 * M_PI endAngle:M_PI * 3 / 2.0 clockwise:0];
+    [path addLineToPoint:CGPointMake(self.frame.size.width - self.arrowOffsetX + self.arrowSize.width / 2.0, self.arrowSize.height)];
+    [path closePath];
+    return path;
+}
+
+//下箭头BezierPath
+- (UIBezierPath *)gettingDownArrowPath{
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [[UIColor redColor] set];
+    //point 1-7从箭头顶点开始顺时针标记
+    [path moveToPoint:CGPointMake(self.frame.size.width - self.arrowOffsetX, self.frame.size.height)];
+    [path addLineToPoint:CGPointMake(self.frame.size.width - self.arrowOffsetX - self.arrowSize.width / 2.0,self.frame.size.height - self.arrowSize.height)];
+    [path addArcWithCenter:CGPointMake(0 + _radius,self.frame.size.height - self.arrowSize.height - _radius) radius:_radius startAngle:M_PI / 2.0 endAngle:M_PI clockwise:1];
+    [path addArcWithCenter:CGPointMake(_radius, _radius) radius:_radius startAngle:M_PI endAngle:M_PI * 3 / 2.0 clockwise:1];
+    [path addArcWithCenter:CGPointMake(self.frame.size.width - _radius, _radius) radius:_radius startAngle:M_PI * 3 / 2.0 endAngle:0 clockwise:1];
+    [path addArcWithCenter:CGPointMake(self.frame.size.width - _radius, self.frame.size.height - _radius - self.arrowSize.height) radius:_radius startAngle:0 endAngle:M_PI / 2.0 clockwise:1];
+    [path addLineToPoint:CGPointMake(self.frame.size.width - self.arrowOffsetX + self.arrowSize.width / 2.0, self.frame.size.height - self.arrowSize.height)];
+    [path closePath];
+    return path;
 }
 
 
@@ -105,10 +130,6 @@ static NSString *cellID = @"PopMenuBarCell";
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    CellModel *tmpModel = self.cellData[indexPath.row];
-//    CGFloat titleHeight = [self gettingStringSizeWithString:tmpModel.title attributes:tmpModel.attributes].height;
-//    CGFloat contentHeight = tmpModel.imgSize.height > titleHeight ? tmpModel.imgSize.height : titleHeight;
-//    return contentHeight + 20;
     return [self.cellHeight[indexPath.row] floatValue];
 }
 
@@ -116,6 +137,14 @@ static NSString *cellID = @"PopMenuBarCell";
 
 - (void)showMenuBarToView:(UIView *)view{
     [view addSubview:self];
+    if (self.direction == YFPopOverDirectionAuto) {
+        if (view.frame.origin.x + view.frame.size.height > [UIScreen mainScreen].bounds.size.height / 2) {
+            self.direction = YFPopOverDirectionDown;
+        }
+        else{
+            self.direction = YFPopOverdirectionUp;
+        }
+    }
     self.alpha = 0;
     [UIView animateWithDuration:0.3 animations:^{
         self.alpha = 1;
@@ -195,7 +224,7 @@ static NSString *cellID = @"PopMenuBarCell";
 
 - (void)reloadView{
     [self setFrame:[self gettingViewFrame]];
-    [self settingTopArrow];
+    [self settingArrow];
     self.selectTableView.frame = CGRectMake(0, self.arrowSize.height, self.frame.size.width, self.frame.size.height - self.arrowSize.height);
 }
 
